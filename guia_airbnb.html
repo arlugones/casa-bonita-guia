@@ -1125,14 +1125,14 @@ const APPLIANCES = [
         "IMPORTANTE (Inducción): utiliza únicamente ollas o sartenes con base ferromagnética (aptas para inducción). Si la olla no es compatible o no hay recipiente encima, la placa no calentará.",
         "Coloca la olla centrada sobre el círculo de la zona frontal (inferior) o posterior (superior).",
         "Toca el botón de Encendido (|) en el extremo derecho para activar el panel.",
-        "Toca el selector de la zona que vas a usar (3er botón para frontal / 6to botón para posterior) y ajusta la potencia de 1 a 9 con (−) o (+), o pulsa B para Booster (2000 W).",
+        "Toca el selector de la zona que vas a usar (ícono inferior para frontal / ícono superior para posterior) y ajusta la potencia de 1 a 9 con (−) o (+), o pulsa B para Booster (2000 W).",
         "Nunca dejes la encimera encendida sin supervisión. Al terminar, apágala con (|) y espera a que desaparezca la 'H' de calor residual antes de limpiar con un paño suave."
       ],
       en: [
         "IMPORTANT (Induction): use only induction-compatible cookware (ferromagnetic base). If the pan is not compatible or no pan is on the ring, the zone will not heat.",
         "Center your pot or pan over the front (lower) or rear (upper) cooking circle.",
         "Touch the Power button (|) on the far right to turn on the control panel.",
-        "Touch the zone selector you want (3rd button for front / 6th button for rear) and set power from 1 to 9 with (−) or (+), or press B for 2000 W Booster.",
+        "Touch the zone selector you want (lower-arc icon for front / upper-arc icon for rear) and set power from 1 to 9 with (−) or (+), or press B for 2000 W Booster.",
         "Never leave the cooktop unattended. When finished, power off with (|) and wait until any 'H' (hot surface) indicator disappears before wiping with a soft cloth."
       ]
     },
@@ -1152,7 +1152,7 @@ const APPLIANCES = [
         target: { x: 22.17, y: 65.0, w: 6.2, h: 17.0 },
         pin: { rail: "top", x: 18.0 },
         title: { es: "Bloqueo de seguridad (Candado)", en: "Child Safety Lock (Padlock)" },
-        tag: { es: "Botón 1 (izq.)", en: "Button 1 (left)" },
+        tag: { es: "Candado · Izquierda", en: "Padlock · Left" },
         desc: { es: "Bloquea todos los botones táctiles (excepto apagado) para evitar toques accidentales durante la cocción o limpieza.", en: "Locks all touch controls (except power off) to prevent accidental presses while cooking or wiping." },
         how: { es: "Mantén presionado el ícono del candado unos 3 segundos para activar o desactivar el bloqueo (el display central mostrará 'Lo').", en: "Touch and hold the padlock icon for about 3 seconds to lock or unlock the panel (center display shows 'Lo')." },
         tip: { es: "Si enciendes la placa y los botones no responden, verifica si 'Lo' aparece y mantén pulsado el candado 3 segundos.", en: "If the panel shows 'Lo' and ignores touches, hold the padlock icon for 3 seconds to unlock." }
@@ -1162,7 +1162,7 @@ const APPLIANCES = [
         target: { x: 29.56, y: 65.0, w: 6.2, h: 17.0 },
         pin: { rail: "bottom", x: 27.0 },
         title: { es: "Temporizador (Reloj)", en: "Timer (Clock)" },
-        tag: { es: "Botón 2", en: "Button 2" },
+        tag: { es: "Reloj", en: "Clock icon" },
         desc: { es: "Programa minutos para que una zona seleccionada se apague automáticamente al terminar el tiempo, o úsalo como alarma.", en: "Sets a countdown to automatically turn off a selected cooking zone, or works as a minute minder." },
         how: { es: "Con una zona activa, toca el ícono del reloj y ajusta los minutos en el display central (88) usando (−) y (+).", en: "With a zone active, touch the clock icon and set the minutes on the center display (88) using (−) and (+)." },
         tip: { es: "Ideal para arroz, pasta o huevos sin riesgo de pasarte de cocción.", en: "Great for timing rice, pasta, or eggs with auto shut-off." }
@@ -1172,7 +1172,7 @@ const APPLIANCES = [
         target: { x: 36.95, y: 65.0, w: 6.4, h: 17.5 },
         pin: { rail: "top", x: 34.0 },
         title: { es: "Selector Zona Frontal (círculo inferior)", en: "Front Zone Selector (lower ring)" },
-        tag: { es: "Botón 3", en: "Button 3" },
+        tag: { es: "Arco inferior", en: "Lower arc" },
         desc: { es: "Activa el quemador de inducción delantero (el círculo más cercano al panel de controles). Su potencia aparece en el dígito izquierdo.", en: "Selects the front induction ring (closest to the touch controls). Its power appears on the left digit." },
         how: { es: "Coloca la olla en el círculo inferior, toca este botón (arco inferior resaltado) y elige el nivel del 1 al 9 con (+) o (−).", en: "Place your pan on the lower ring, tap this button (highlighted lower arc), and pick level 1–9 with (+) or (−)." },
         tip: { es: "Para apagar solo esta zona, selecciónala y baja a '0' con (−).", en: "To turn off just this zone, select it and decrease to '0' with (−)." }
@@ -1182,7 +1182,7 @@ const APPLIANCES = [
         target: { x: 44.46, y: 65.0, w: 6.2, h: 17.0 },
         pin: { rail: "bottom", x: 44.5 },
         title: { es: "Disminuir potencia / tiempo (−)", en: "Decrease Power / Time (−)" },
-        tag: { es: "Botón 4", en: "Button 4" },
+        tag: { es: "Símbolo −", en: "Symbol −" },
         desc: { es: "Reduce la intensidad de calor (de 9 hasta 0) en la zona seleccionada o disminuye los minutos del temporizador.", en: "Lowers heat intensity (9 down to 0) on the selected zone or decreases timer minutes." },
         how: { es: "Selecciona primero la zona (o el temporizador) y toca (−) por pasos o mantenlo presionado para bajar rápido.", en: "Select a zone (or timer) first, then tap (−) step-by-step or hold to drop faster." },
         tip: { es: "Bajar a nivel 2–4 es perfecto para mantener salsas o fuego lento.", en: "Levels 2–4 are ideal for simmering sauces gently." }
@@ -1192,7 +1192,7 @@ const APPLIANCES = [
         target: { x: 55.42, y: 65.0, w: 6.2, h: 17.0 },
         pin: { rail: "top", x: 64.5 },
         title: { es: "Aumentar potencia / tiempo (+)", en: "Increase Power / Time (+)" },
-        tag: { es: "Botón 5", en: "Button 5" },
+        tag: { es: "Símbolo +", en: "Symbol +" },
         desc: { es: "Sube la intensidad de calor (de 1 hasta 9) en la zona seleccionada o aumenta los minutos del temporizador.", en: "Raises heat intensity (1 up to 9) on the selected zone or increases timer minutes." },
         how: { es: "Selecciona primero la zona deseada y toca (+) hasta alcanzar el nivel de calor que necesitas.", en: "Select your desired cooking zone first, then tap (+) to reach your target heat level." },
         tip: { es: "Niveles 7–9 funcionan muy bien para sellar carnes o saltear.", en: "Levels 7–9 work well for searing and stir-frying." }
@@ -1202,7 +1202,7 @@ const APPLIANCES = [
         target: { x: 62.81, y: 65.0, w: 6.4, h: 17.5 },
         pin: { rail: "bottom", x: 63.0 },
         title: { es: "Selector Zona Posterior (círculo superior)", en: "Rear Zone Selector (upper ring)" },
-        tag: { es: "Botón 6", en: "Button 6" },
+        tag: { es: "Arco superior", en: "Upper arc" },
         desc: { es: "Activa el quemador de inducción trasero (círculo superior de mayor diámetro). Su potencia aparece en el dígito derecho.", en: "Selects the larger rear induction ring (upper circle). Its power level appears on the right digit." },
         how: { es: "Coloca una olla o sartén grande en el círculo superior, toca este botón (arco superior resaltado) y ajusta con (+) o (−).", en: "Place a larger pot or pan on the upper ring, tap this button (highlighted upper arc), and adjust with (+) or (−)." },
         tip: { es: "Es la mejor zona para sartenes amplios u ollas medianas.", en: "Best suited for wider skillets and medium pots." }
@@ -1212,7 +1212,7 @@ const APPLIANCES = [
         target: { x: 70.20, y: 65.0, w: 6.2, h: 17.0 },
         pin: { rail: "top", x: 80.5 },
         title: { es: "Función Booster (B · hasta 2000 W)", en: "Booster Function (B · up to 2000 W)" },
-        tag: { es: "Botón 7", en: "Button 7" },
+        tag: { es: "Letra B", en: "Key B" },
         desc: { es: "Entrega máxima potencia puntual (hasta 2000 W) para hervir agua o calentar aceite en cuestión de segundos.", en: "Delivers a high-power boost (up to 2000 W) to boil water or preheat pans rapidly." },
         how: { es: "Selecciona la zona frontal o posterior y toca el botón (B). El dígito de esa zona mostrará 'b'. Para salir antes, ajusta con (−).", en: "Select the front or rear zone and touch (B). That zone's digit will show 'b'. Touch (−) anytime to step back down." },
         tip: { es: "Úsalo principalmente para hervir agua; ten los ingredientes listos porque calienta muy rápido.", en: "Best for boiling water quickly—induction heats much faster than gas." }
@@ -1222,7 +1222,7 @@ const APPLIANCES = [
         target: { x: 77.59, y: 65.0, w: 6.2, h: 17.0 },
         pin: { rail: "bottom", x: 80.5 },
         title: { es: "Encendido / Apagado general (|)", en: "Main Power On / Off (|)" },
-        tag: { es: "Botón 8 (der.)", en: "Button 8 (right)" },
+        tag: { es: "Encendido · Derecha", en: "Power · Right" },
         desc: { es: "Enciende todo el panel táctil o apaga inmediatamente todas las zonas de cocción activas.", en: "Powers the touch panel on, or immediately shuts off all active cooking zones." },
         how: { es: "Toca (|) una vez para encender (verás guiones o '0' en los displays). Toca (|) de nuevo al terminar para apagar toda la encimera.", en: "Tap (|) once to turn on. Tap (|) again when finished to shut off the entire cooktop." },
         tip: { es: "El ventilador interno puede seguir sonando suavemente unos minutos después de apagar para enfriar la electrónica: es normal.", en: "The internal cooling fan may run softly for a couple of minutes after shut-off—this is normal." }
@@ -1586,10 +1586,17 @@ const APPLIANCES = [
     photoFront: "assets/lg-50ur7800psb-front.jpg",
     photoPanel: "assets/lg-50ur7800psb-ports.jpg",
     photoParts: "assets/lg-50ur7800psb-bezel.jpg",
+    viewPhotos: {
+      front: "assets/lg-50ur7800psb-front.jpg",
+      webos: "assets/lg-50ur7800psb-webos.jpg",
+      panel: "assets/lg-50ur7800psb-ports.jpg",
+      parts: "assets/lg-50ur7800psb-bezel.jpg"
+    },
     panelNarrow: false,
     frontNarrow: false,
     viewLabels: {
       front: { es: "Vista frontal", en: "Front view" },
+      webos: { es: "Pantalla webOS 23", en: "webOS 23 screen" },
       panel: { es: "Puertos traseros", en: "Rear ports" },
       parts: { es: "Botón físico", en: "Power button" }
     },
@@ -1615,7 +1622,7 @@ const APPLIANCES = [
       {
         id: "tv-phys-btn", num: 1, round: false,
         rects: {
-          front: { left: 46, top: 85, width: 8, height: 7 },
+          front: { left: 46, top: 84, width: 8, height: 8 },
           parts: { left: 57, top: 55, width: 12, height: 14 }
         },
         title: { es: "Botón físico inferior y sensor IR", en: "Bottom Power Button & IR Sensor" },
@@ -1636,7 +1643,7 @@ const APPLIANCES = [
       {
         id: "tv-webos", num: 2, round: false,
         rects: {
-          front: { left: 8, top: 12, width: 34, height: 28 }
+          webos: { left: 14, top: 59, width: 54, height: 13 }
         },
         title: { es: "Smart TV webOS 23 (Home · Apps)", en: "webOS 23 Smart TV (Home · Apps)" },
         tag: { es: "Control · Home 🏠", en: "Remote · Home 🏠" },
@@ -1656,8 +1663,7 @@ const APPLIANCES = [
       {
         id: "tv-side-ports", num: 3, round: false,
         rects: {
-          panel: { left: 72, top: 18, width: 16, height: 58 },
-          front: { left: 4, top: 48, width: 16, height: 24 }
+          panel: { left: 72, top: 18, width: 16, height: 58 }
         },
         title: { es: "Bahía lateral: 2× HDMI (eARC) y 2× USB", en: "Side Bay: 2× HDMI (eARC) & 2× USB" },
         tag: { es: "Lateral izq. (de frente)", en: "Left side (from front)" },
@@ -1697,7 +1703,7 @@ const APPLIANCES = [
       {
         id: "tv-wireless", num: 5, round: false,
         rects: {
-          front: { left: 54, top: 24, width: 32, height: 28 }
+          webos: { left: 60.5, top: 48, width: 19.5, height: 9 }
         },
         title: { es: "AirPlay 2, Bluetooth 5.0 y Magic Remote", en: "AirPlay 2, Bluetooth 5.0 & Magic Remote" },
         tag: { es: "Inalámbrico", en: "Wireless" },
@@ -2331,7 +2337,8 @@ function buildDirectHotspotsStageHtml(app, st) {
       </div>`;
   }
 
-  const viewImg = st.view === "parts" ? app.photoParts : (st.view === "panel" ? app.photoPanel : app.photoFront);
+  const viewImg = (app.viewPhotos && app.viewPhotos[st.view])
+    || (st.view === "parts" ? app.photoParts : (st.view === "panel" ? app.photoPanel : app.photoFront));
   const frameClass = st.view === "panel"
     ? (app.panelNarrow ? "panel-narrow" : "")
     : ((st.view === "front" && app.frontNarrow) || (st.view === "parts" && app.partsNarrow) ? "front-narrow" : "");

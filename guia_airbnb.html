@@ -974,6 +974,54 @@ html[lang="en"] .lang-en{display:inline !important}
     </div>
   </section>
 
+  <!-- APARTMENT INTERCOM / RECEPTION COMMUNICATION -->
+  <section class="access-card" id="intercomGuide" aria-label="Apartment intercom and reception contact">
+    <div class="access-head">
+      <div>
+        <div class="badge-row">
+          <span class="badge-verified">
+            <span class="lang-es">Recepción 24/7 · Citófono</span>
+            <span class="lang-en">24/7 Front Desk · Intercom</span>
+          </span>
+        </div>
+        <h2>
+          <span class="lang-es">Cómo usar el citófono para comunicarte con recepción</span>
+          <span class="lang-en">How to use the intercom to reach the front desk</span>
+        </h2>
+        <p>
+          <span class="lang-es">Contacto directo desde el estudio con la portería y seguridad 24/7 del Edificio Cielo.</span>
+          <span class="lang-en">Direct communication from the studio to Edificio Cielo's 24/7 security and reception desk.</span>
+        </p>
+      </div>
+    </div>
+    <div class="access-grid">
+      <ol class="access-steps">
+        <li>
+          <span class="access-num">1</span>
+          <div>
+            <span class="lang-es"><strong>Para llamar a recepción:</strong> ubica el citófono junto a la entrada del estudio y presiona el botón identificado con el ícono de conserjería / recepción (o levanta el auricular / marca la extensión de portería indicada en el equipo).</span>
+            <span class="lang-en"><strong>Calling reception:</strong> locate the intercom by the studio entrance and press the concierge / front-desk button (or lift the handset / dial the lobby extension shown on the unit).</span>
+          </div>
+        </li>
+        <li>
+          <span class="access-num">2</span>
+          <div>
+            <span class="lang-es"><strong>Cuándo usarlo:</strong> comunícate con portería si necesitas asistencia del edificio, quieres avisar tu salida o esperas a una visita previamente registrada.</span>
+            <span class="lang-en"><strong>When to use it:</strong> contact the front desk for building assistance, quick questions, or to coordinate a pre-registered guest.</span>
+          </div>
+        </li>
+        <li>
+          <span class="access-num">3</span>
+          <div>
+            <span class="lang-es"><strong>Pedidos y entregas (Delivery):</strong> cuando llegue un pedido, recepción puede anunciarlo por el citófono. Por normativa del edificio, los repartidores no pueden subir: por favor baja a recibirlo en la entrada.</span>
+            <span class="lang-en"><strong>Deliveries &amp; incoming calls:</strong> when a delivery arrives, security may call via the intercom. Per building policy, couriers cannot come upstairs—please meet them at the main entrance.</span>
+          </div>
+        </li>
+      </ol>
+      <div class="access-video-card" id="intercomMediaSlot"></div>
+    </div>
+  </section>
+
   <!-- VERIFIED MODELS WITH REAL PHOTOS & INTERACTIVE PANELS -->
   <div class="featured-stack" id="verifiedStack"></div>
 
@@ -2070,6 +2118,62 @@ const CHECKIN_ACCESS = {
   posterUrl: "assets/videos/ingreso-poster.jpg"
 };
 
+/* Configura aquí la foto, el vídeo o el número/botón exacto del citófono cuando lo tengas */
+const INTERCOM_GUIDE = {
+  photoUrl: "",
+  videoUrl: "",
+  buttonOrExt: ""
+};
+
+function renderIntercomMedia() {
+  const slot = document.getElementById("intercomMediaSlot");
+  if (!slot) return;
+  const hasVideo = Boolean(INTERCOM_GUIDE.videoUrl && INTERCOM_GUIDE.videoUrl.trim());
+  const hasPhoto = Boolean(INTERCOM_GUIDE.photoUrl && INTERCOM_GUIDE.photoUrl.trim());
+  const extLine = INTERCOM_GUIDE.buttonOrExt && INTERCOM_GUIDE.buttonOrExt.trim()
+    ? `<div class="pending-note" style="margin-bottom:10px"><strong>${currentLang === "es" ? "Marcación directa:" : "Direct call:"}</strong> ${INTERCOM_GUIDE.buttonOrExt}</div>`
+    : "";
+
+  if (hasVideo) {
+    slot.innerHTML = `
+      ${extLine}
+      <strong style="font-size:.9rem;display:block">▶ ${currentLang === "es" ? "Vídeo rápido del citófono" : "Quick intercom walkthrough"}</strong>
+      <video class="video-player" controls playsinline preload="metadata" src="${INTERCOM_GUIDE.videoUrl}"></video>`;
+    return;
+  }
+  if (hasPhoto) {
+    slot.innerHTML = `
+      ${extLine}
+      <img src="${INTERCOM_GUIDE.photoUrl}" alt="${currentLang === "es" ? "Citófono del estudio" : "Studio intercom"}" style="width:100%;border-radius:12px;display:block;border:1px solid var(--line)">`;
+    return;
+  }
+
+  slot.innerHTML = `
+    ${extLine}
+    <div style="display:flex;gap:14px;align-items:center">
+      <svg viewBox="0 0 88 124" width="76" height="106" style="flex:none" aria-hidden="true">
+        <rect x="10" y="6" width="68" height="112" rx="12" fill="#ffffff" stroke="#6f8862" stroke-width="2.5"/>
+        <rect x="20" y="18" width="48" height="28" rx="6" fill="#eef2ea" stroke="#a39c72" stroke-width="1.5"/>
+        <circle cx="44" cy="32" r="7" fill="#6f8862"/>
+        <path d="M40.5 32.5c1.5 2 3.5 3 5.5 3.5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <rect x="22" y="58" width="44" height="18" rx="9" fill="#6f8862"/>
+        <text x="44" y="70" text-anchor="middle" fill="#ffffff" font-size="8.5" font-weight="700" font-family="sans-serif">24/7</text>
+        <circle cx="31" cy="94" r="6" fill="#dde5d8" stroke="#6f8862" stroke-width="1.5"/>
+        <circle cx="57" cy="94" r="6" fill="#dde5d8" stroke="#6f8862" stroke-width="1.5"/>
+      </svg>
+      <div>
+        <strong style="display:block;color:var(--ink);font-size:.93rem;margin-bottom:4px">
+          ${currentLang === "es" ? "Espacio reservado · Citófono del estudio" : "Reserved slot · Studio intercom"}
+        </strong>
+        <p style="margin:0;font-size:.83rem;color:var(--muted);line-height:1.45">
+          ${currentLang === "es"
+            ? "Aquí podremos añadir la foto o vídeo real de tu citófono junto con el botón o número exacto de extensión para llamar a recepción."
+            : "Space reserved to add the photo or short video of your studio intercom along with the exact front-desk button or extension."}
+        </p>
+      </div>
+    </div>`;
+}
+
 function renderAccessVideo() {
   const slot = document.getElementById("accessVideoSlot");
   if (!slot) return;
@@ -2122,6 +2226,7 @@ function setLanguage(lang) {
   document.getElementById("esBtn").setAttribute("aria-pressed", String(lang === "es"));
   document.getElementById("enBtn").setAttribute("aria-pressed", String(lang === "en"));
   renderAccessVideo();
+  renderIntercomMedia();
   renderVerifiedStack();
   renderGrid();
   if (activeModalAppId) renderModalBody();
@@ -2654,6 +2759,7 @@ document.addEventListener("keydown", e => {
 
 // Initial render
 renderAccessVideo();
+renderIntercomMedia();
 renderVerifiedStack();
 renderGrid();
 </script>

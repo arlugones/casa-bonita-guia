@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Casa Bonita · Guía interactiva bilingüe de ingreso y uso de electrodomésticos en Edificio Cielo, Quito.">
 <link rel="icon" type="image/svg+xml" href="assets/brand/casabonita-icono.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <title>Casa Bonita · Guía interactiva | Edificio Cielo · Quito</title>
 <style>
 :root{
@@ -13,12 +16,15 @@
   --paper:#f6f1e4;
   --card:#ffffff;
   --line:#e3dccb;
+  --olive:#a39c72;
   --sage:#dde5d8;
   --sage-soft:#eef2ea;
   --sage-dark:#6f8862;
   --accent:#566d4b;
   --warn-bg:#fbf5e8;
   --warn-line:#ead8b1;
+  --font-display:"Cormorant Garamond",Georgia,serif;
+  --font-sans:"Montserrat",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
   --radius:20px;
   --shadow:0 12px 30px rgba(59,58,51,.07);
 }
@@ -28,7 +34,7 @@ body{
   margin:0;
   background:var(--paper);
   color:var(--ink);
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-family:var(--font-sans);
   line-height:1.55;
 }
 button,input{font:inherit}
@@ -39,36 +45,37 @@ button,input{font:inherit}
 html[lang="en"] .lang-es{display:none !important}
 html[lang="en"] .lang-en{display:inline !important}
 
-/* Header */
-.hero{padding:36px 0 20px}
-.topline{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-.brand-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.brand-logo{height:44px;width:auto;display:block}
-.brand-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-@media(max-width:600px){.brand-logo{height:36px}}
-.eyebrow{
-  text-transform:uppercase;
-  letter-spacing:.15em;
-  font-size:.72rem;
-  color:var(--sage-dark);
-  font-weight:700;
+/* Header & Typographic Hierarchy */
+.hero{padding:28px 0 22px}
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  padding-bottom:16px;
+  border-bottom:1px solid rgba(163,156,114,.35);
 }
+.brand-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand-logo{height:46px;width:auto;display:block;flex:none}
+.brand-divider{width:1px;height:26px;background:rgba(163,156,114,.45);display:block}
 .pill-place{
   background:var(--sage-soft);
   border:1px solid #d5e0d4;
   color:var(--sage-dark);
   border-radius:999px;
-  padding:4px 10px;
-  font-size:.74rem;
-  font-weight:650;
+  padding:5px 12px;
+  font-size:.73rem;
+  font-weight:600;
+  letter-spacing:.03em;
 }
 .lang{
   border:1px solid var(--line);
   border-radius:999px;
   background:#fff;
-  padding:5px;
+  padding:4px;
   display:flex;
   gap:4px;
+  flex:none;
   box-shadow:0 2px 8px rgba(0,0,0,.03);
 }
 .lang button{
@@ -78,20 +85,78 @@ html[lang="en"] .lang-en{display:inline !important}
   padding:7px 14px;
   color:var(--muted);
   font-weight:700;
-  font-size:.82rem;
+  font-size:.8rem;
   cursor:pointer;
   transition:.15s ease;
 }
 .lang button.active{background:var(--sage);color:var(--ink)}
-.hero h1{
-  font-family:Georgia,serif;
-  font-weight:500;
-  font-size:clamp(2rem,5vw,3.4rem);
-  line-height:1.06;
-  letter-spacing:-.035em;
-  margin:14px 0 10px;
+.hero-body{padding-top:22px}
+.hero-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  font-size:.72rem;
+  color:var(--sage-dark);
+  font-weight:700;
+  margin-bottom:8px;
 }
-.hero-sub{max-width:690px;color:var(--muted);margin:0;font-size:1rem}
+.hero-kicker::before{
+  content:"";
+  width:22px;
+  height:1.5px;
+  background:var(--olive);
+  display:inline-block;
+}
+.hero h1{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:clamp(2.25rem,5.2vw,3.75rem);
+  line-height:1.02;
+  letter-spacing:-.02em;
+  margin:0 0 12px;
+  max-width:780px;
+}
+.hero h1 em{
+  font-style:italic;
+  color:var(--accent);
+}
+.hero-sub{
+  max-width:660px;
+  color:var(--muted);
+  margin:0;
+  font-size:.98rem;
+  font-weight:400;
+}
+.hero-nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:16px;
+}
+.hero-link{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:7px 13px;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid var(--line);
+  color:var(--ink);
+  text-decoration:none;
+  font-size:.79rem;
+  font-weight:600;
+  transition:.15s ease;
+}
+.hero-link:hover{border-color:var(--sage-dark);background:var(--sage-soft);color:var(--accent)}
+@media(max-width:600px){
+  .brand-logo{height:36px}
+  .brand-divider{display:none}
+  .topbar{padding-bottom:14px;align-items:flex-start}
+  .hero-body{padding-top:18px}
+  .hero-sub{font-size:.92rem}
+}
 
 /* Notice & toolbar */
 .notice{
@@ -168,11 +233,12 @@ html[lang="en"] .lang-en{display:inline !important}
   border-radius:999px;
 }
 .featured-head h2{
-  font-family:Georgia,serif;
-  font-weight:500;
-  font-size:clamp(1.45rem,2.6vw,1.95rem);
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:clamp(1.65rem,2.8vw,2.2rem);
   margin:0;
-  letter-spacing:-.02em;
+  line-height:1.08;
+  letter-spacing:-.015em;
 }
 .featured-head p{margin:4px 0 0;color:var(--muted);font-size:.9rem}
 .view-switch{
@@ -638,8 +704,8 @@ html[lang="en"] .lang-en{display:inline !important}
   margin-bottom:16px;
 }
 .access-head h2{
-  font:500 clamp(1.32rem,2.4vw,1.65rem) Georgia,serif;
-  margin:4px 0 3px;
+  font:600 clamp(1.55rem,2.6vw,1.95rem)/1.1 var(--font-display);
+  margin:4px 0 4px;
 }
 .access-head p{margin:0;color:var(--muted);font-size:.9rem}
 .access-grid{
@@ -704,8 +770,8 @@ html[lang="en"] .lang-en{display:inline !important}
   flex-wrap:wrap;
 }
 .section-head h2{
-  font:500 clamp(1.5rem,3vw,2rem) Georgia,serif;
-  letter-spacing:-.02em;
+  font:600 clamp(1.7rem,3.1vw,2.25rem)/1.08 var(--font-display);
+  letter-spacing:-.015em;
   margin:0;
 }
 .section-head p{color:var(--muted);font-size:.88rem;margin:0}
@@ -880,30 +946,45 @@ html[lang="en"] .lang-en{display:inline !important}
 </head>
 <body>
 <header class="wrap hero">
-  <div class="topline">
+  <div class="topbar">
     <div class="brand-row">
       <img class="brand-logo" src="assets/brand/casabonita-logo-horizontal.png" alt="Casa Bonita">
-      <div class="brand-meta">
-        <span class="eyebrow">
-          <span class="lang-es">GUÍA INTERACTIVA DEL ALOJAMIENTO</span>
-          <span class="lang-en">INTERACTIVE GUEST GUIDE</span>
-        </span>
-        <span class="pill-place">Edificio Cielo · Quito</span>
-      </div>
+      <span class="brand-divider" aria-hidden="true"></span>
+      <span class="pill-place">Edificio Cielo · Quito</span>
     </div>
     <div class="lang" role="group" aria-label="Language selector">
       <button class="active" id="esBtn" type="button" aria-pressed="true">ES</button>
       <button id="enBtn" type="button" aria-pressed="false">EN</button>
     </div>
   </div>
-  <h1>
-    <span class="lang-es">Toca cada control y úsalo sin dudas.</span>
-    <span class="lang-en">Tap any control and use it with ease.</span>
-  </h1>
-  <p class="hero-sub">
-    <span class="lang-es">Haz clic en los botones numerados de cada equipo para ver exactamente qué hace y cómo operarlo paso a paso.</span>
-    <span class="lang-en">Click the numbered buttons on each appliance to see exactly what each control does and how to use it step by step.</span>
-  </p>
+  <div class="hero-body">
+    <span class="hero-kicker">
+      <span class="lang-es">Guía del huésped · Manual interactivo</span>
+      <span class="lang-en">Guest Guide · Interactive Manual</span>
+    </span>
+    <h1>
+      <span class="lang-es">Toca cada control <em>y úsalo sin dudas.</em></span>
+      <span class="lang-en">Tap any control <em>and use it with ease.</em></span>
+    </h1>
+    <p class="hero-sub">
+      <span class="lang-es">Encuentra aquí el vídeo de ingreso con código, cómo comunicarte con recepción 24/7 y los controles explicados paso a paso de cada equipo del estudio.</span>
+      <span class="lang-en">Find your access-code entry video, 24/7 front desk intercom instructions, and step-by-step interactive controls for every studio appliance.</span>
+    </p>
+    <nav class="hero-nav" aria-label="Quick sections">
+      <a class="hero-link" href="#accessGuide">
+        <span class="lang-es">🔑 Ingreso autónomo</span>
+        <span class="lang-en">🔑 Self check-in</span>
+      </a>
+      <a class="hero-link" href="#intercomGuide">
+        <span class="lang-es">📞 Citófono recepción</span>
+        <span class="lang-en">📞 Front desk intercom</span>
+      </a>
+      <a class="hero-link" href="#verifiedStack">
+        <span class="lang-es">✦ Equipos interactivos (7)</span>
+        <span class="lang-en">✦ Interactive appliances (7)</span>
+      </a>
+    </nav>
+  </div>
 </header>
 
 <main class="wrap">

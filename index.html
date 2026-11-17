@@ -240,7 +240,23 @@ html[lang="en"] .lang-en{display:inline !important}
   line-height:1.08;
   letter-spacing:-.015em;
 }
-.featured-head p{margin:4px 0 0;color:var(--muted);font-size:.9rem}
+.featured-head p{margin:6px 0 0;color:var(--muted);font-size:.9rem}
+.featured-head p.model-sub{
+  margin:3px 0 0;
+  font-size:.78rem;
+  font-weight:500;
+  color:var(--muted);
+  opacity:.85;
+  letter-spacing:.03em;
+}
+.card-model-sub{
+  margin:3px 0 0;
+  font-size:.73rem;
+  font-weight:500;
+  color:var(--muted);
+  opacity:.85;
+  letter-spacing:.03em;
+}
 .view-switch{
   display:flex;
   gap:4px;
@@ -2794,9 +2810,9 @@ function renderVerifiedStack() {
               <span class="badge-verified">
                 ${currentLang === "es" ? "Modelo verificado · Panel real" : "Verified model · Real panel"}
               </span>
-              <span class="badge-model">${app.model}</span>
             </div>
-            <h2>${t(app.name)} (${app.model})</h2>
+            <h2>${t(app.name)}</h2>
+            <p class="model-sub">${currentLang === "es" ? "Modelo" : "Model"}: ${app.model}</p>
             <p>${t(app.short)}</p>
           </div>
           <div class="view-switch" role="group" aria-label="View switch">
@@ -2891,7 +2907,7 @@ function renderGrid() {
     const visual = app.verified
       ? `<div class="card-visual has-photo ${app.lightStage ? "light-bg" : ""}">
            <img src="${app.photoFront}" alt="${t(app.name)}">
-           <span class="card-status verified">${app.model} · ${currentLang === "es" ? "Panel real" : "Real panel"}</span>
+           <span class="card-status verified">${currentLang === "es" ? "Panel real" : "Real panel"}</span>
          </div>`
       : `<div class="card-visual">
            ${app.svg}
@@ -2899,7 +2915,7 @@ function renderGrid() {
          </div>`;
 
     const tagText = app.verified
-      ? (currentLang === "es" ? "Modelo verificado" : "Verified model")
+      ? (currentLang === "es" ? "Verificado" : "Verified")
       : (currentLang === "es" ? "Guía general" : "General guide");
 
     const btnText = app.verified
@@ -2914,6 +2930,7 @@ function renderGrid() {
             <h3>${t(app.name)}</h3>
             <span class="tag">${tagText}</span>
           </div>
+          ${app.model ? `<p class="card-model-sub">${currentLang === "es" ? "Modelo" : "Model"}: ${app.model}</p>` : ""}
           <p class="desc">${t(app.short)}</p>
           <div class="card-actions">
             <button type="button" class="btn-primary" data-open-app="${app.id}">${btnText}</button>

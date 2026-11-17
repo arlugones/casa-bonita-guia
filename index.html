@@ -1198,9 +1198,6 @@ html[lang="en"] .lang-en{display:inline !important}
  * ============================================================================
  * GUÍA INTERACTIVA DE ELECTRODOMÉSTICOS — CONFIGURACIÓN DE DATOS
  * ============================================================================
- * - Para añadir un vídeo más adelante en cualquier equipo:
- *   Cambia `videoUrl: ""` por la ruta local (ej. "assets/videos/microondas.mp4")
- *   o un enlace MP4. El reproductor aparecerá automáticamente.
  */
 
 const AUTO_MENUS = [
@@ -2199,29 +2196,20 @@ const CHECKIN_ACCESS = {
   posterUrl: "assets/videos/ingreso-poster.jpg"
 };
 
-/* Configura aquí la foto, el vídeo o el número/botón exacto del citófono cuando lo tengas */
+/* Configura aquí la foto o el número/botón exacto del citófono cuando lo tengas */
 const INTERCOM_GUIDE = {
   photoUrl: "",
-  videoUrl: "",
   buttonOrExt: ""
 };
 
 function renderIntercomMedia() {
   const slot = document.getElementById("intercomMediaSlot");
   if (!slot) return;
-  const hasVideo = Boolean(INTERCOM_GUIDE.videoUrl && INTERCOM_GUIDE.videoUrl.trim());
   const hasPhoto = Boolean(INTERCOM_GUIDE.photoUrl && INTERCOM_GUIDE.photoUrl.trim());
   const extLine = INTERCOM_GUIDE.buttonOrExt && INTERCOM_GUIDE.buttonOrExt.trim()
     ? `<div class="pending-note" style="margin-bottom:10px"><strong>${currentLang === "es" ? "Marcación directa:" : "Direct call:"}</strong> ${INTERCOM_GUIDE.buttonOrExt}</div>`
     : "";
 
-  if (hasVideo) {
-    slot.innerHTML = `
-      ${extLine}
-      <strong style="font-size:.9rem;display:block">▶ ${currentLang === "es" ? "Vídeo rápido del citófono" : "Quick intercom walkthrough"}</strong>
-      <video class="video-player" controls playsinline preload="metadata" src="${INTERCOM_GUIDE.videoUrl}"></video>`;
-    return;
-  }
   if (hasPhoto) {
     slot.innerHTML = `
       ${extLine}
@@ -2244,12 +2232,12 @@ function renderIntercomMedia() {
       </svg>
       <div>
         <strong style="display:block;color:var(--ink);font-size:.93rem;margin-bottom:4px">
-          ${currentLang === "es" ? "Espacio reservado · Citófono del estudio" : "Reserved slot · Studio intercom"}
+          ${currentLang === "es" ? "Citófono del estudio · Recepción 24/7" : "Studio intercom · 24/7 Front Desk"}
         </strong>
         <p style="margin:0;font-size:.83rem;color:var(--muted);line-height:1.45">
           ${currentLang === "es"
-            ? "Aquí podremos añadir la foto o vídeo real de tu citófono junto con el botón o número exacto de extensión para llamar a recepción."
-            : "Space reserved to add the photo or short video of your studio intercom along with the exact front-desk button or extension."}
+            ? "Ubicado junto a la puerta de entrada para comunicarte directo con conserjería ante consultas, entregas o emergencias."
+            : "Located next to the entrance door for direct communication with concierge for questions, deliveries, or urgent assistance."}
         </p>
       </div>
     </div>`;
@@ -2326,37 +2314,11 @@ function projectRect(app, ctrl, viewMode) {
 }
 
 function buildMediaHtml(app) {
-  const hasVideo = Boolean(app.videoUrl && app.videoUrl.trim());
-  const pdfBtn = app.specPdf ? `
+  if (!app.specPdf) return "";
+  return `
     <a class="btn-link" href="${app.specPdf}" target="_blank" rel="noopener">
       📄 ${currentLang === "es" ? "Ficha técnica (PDF)" : "Spec sheet (PDF)"}
-    </a>` : "";
-
-  if (hasVideo) {
-    return `
-      <div style="width:100%">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
-          <strong style="font-size:.86rem">▶ ${currentLang === "es" ? "Vídeo explicativo" : "How-to video"}</strong>
-          ${pdfBtn}
-        </div>
-        <video class="video-player" controls preload="metadata" src="${app.videoUrl}"></video>
-      </div>`;
-  }
-  return `
-    <div class="video-box">
-      <span class="video-badge">▶</span>
-      <div>
-        <strong style="display:block;color:var(--ink)">
-          ${currentLang === "es" ? "Vídeo tutorial · Próximamente" : "How-to video · Coming soon"}
-        </strong>
-        <span>
-          ${currentLang === "es"
-            ? "Espacio reservado: el anfitrión añadirá aquí el vídeo real de este equipo."
-            : "Reserved slot: the host will add the real walkthrough video here soon."}
-        </span>
-      </div>
-    </div>
-    ${pdfBtn}`;
+    </a>`;
 }
 
 function buildDetailCardHtml(ctrl, customOverride) {
@@ -2631,7 +2593,7 @@ function renderVerifiedStack() {
               </summary>
               <ol class="steps-list">${app.steps[currentLang].map(s => `<li>${s}</li>`).join("")}</ol>
             </details>
-            <div class="media-row">${buildMediaHtml(app)}</div>
+            ${buildMediaHtml(app) ? `<div class="media-row">${buildMediaHtml(app)}</div>` : ""}
           </div>
         </div>
       </section>`;
@@ -2814,7 +2776,10 @@ function renderModalBody() {
     </div>`;
 
   document.getElementById("modalStepsList").innerHTML = app.steps[currentLang].map(s => `<li>${s}</li>`).join("");
-  document.getElementById("modalMediaRow").innerHTML = buildMediaHtml(app);
+  const modalMedia = buildMediaHtml(app);
+  const modalMediaEl = document.getElementById("modalMediaRow");
+  modalMediaEl.innerHTML = modalMedia;
+  modalMediaEl.style.display = modalMedia ? "flex" : "none";
 }
 
 // Global event bindings

@@ -912,6 +912,39 @@ html[lang="en"] .lang-en{display:inline !important}
   font-size:.79rem;
   color:#6a5324;
 }
+.trouble-box{
+  border:1px solid var(--warn-line);
+  border-radius:14px;
+  padding:12px 15px;
+  background:#fffdf8;
+}
+.trouble-box summary{
+  cursor:pointer;
+  font-weight:700;
+  font-size:.9rem;
+  color:#6a5324;
+}
+.trouble-list{
+  margin:12px 0 0;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:9px;
+}
+.trouble-item{
+  background:var(--warn-bg);
+  border:1px solid #efe0bd;
+  border-radius:11px;
+  padding:10px 12px;
+  font-size:.84rem;
+}
+.trouble-q{
+  display:block;
+  font-weight:700;
+  color:var(--ink);
+  margin-bottom:3px;
+}
+.trouble-a{color:#4d4638;line-height:1.45}
 
 .footer{
   border-top:1px solid var(--line);
@@ -1187,6 +1220,7 @@ html[lang="en"] .lang-en{display:inline !important}
           </summary>
           <ol class="steps-list" id="modalStepsList"></ol>
         </details>
+        <div id="modalTroubleshooting"></div>
         <div class="media-row" id="modalMediaRow"></div>
       </div>
     </div>
@@ -2313,6 +2347,201 @@ function projectRect(app, ctrl, viewMode) {
   };
 }
 
+const TROUBLESHOOTING = {
+  cooktop: [
+    {
+      q: { es: "Parpadea 'u' o muestra E0 y no calienta", en: "Flashing 'u' or E0 and zone won't heat" },
+      a: {
+        es: "No detecta una olla apta para inducción. Usa un recipiente con base ferromagnética (que atraiga un imán) y céntralo sobre el círculo de cocción.",
+        en: "No induction-compatible pan detected. Use cookware with a magnetic base and center it directly over the cooking ring."
+      }
+    },
+    {
+      q: { es: "Aparece 'Lo' y los botones no responden", en: "'Lo' appears and touch keys ignore taps" },
+      a: {
+        es: "El bloqueo de seguridad infantil está activo. Mantén presionado el botón del candado durante unos 3 segundos hasta que desaparezca 'Lo'.",
+        en: "Child lock is active. Touch and hold the padlock key for about 3 seconds until 'Lo' clears."
+      }
+    },
+    {
+      q: { es: "Muestra una 'H' después de apagar o suena el ventilador", en: "'H' remains after shut-off or fan keeps running" },
+      a: {
+        es: "Es funcionamiento normal según el manual: 'H' indica vidrio aún caliente (no tocar ni limpiar hasta que se apague) y el ventilador enfría la electrónica unos minutos.",
+        en: "Normal behavior per manual: 'H' warns of residual glass heat (wait before wiping) and the cooling fan runs briefly to cool internal electronics."
+      }
+    },
+    {
+      q: { es: "Aparece código E1", en: "E1 error code displayed" },
+      a: {
+        es: "Indica anomalía de voltaje eléctrico o temperatura interna alta. Apaga la encimera, verifica que nada obstruya la ventilación y espera unos minutos; si persiste, avísanos.",
+        en: "Indicates voltage fluctuation or high internal temperature. Power off, ensure ventilation underneath is clear, and let it cool; contact us if it persists."
+      }
+    }
+  ],
+  microwave: [
+    {
+      q: { es: "El panel no responde o muestra 'L' / candado", en: "Controls unresponsive or showing 'L' / lock" },
+      a: {
+        es: "Bloqueo infantil activado. Mantén presionado el botón rojo Detener / Cancelar (■) durante 3 segundos hasta escuchar un pitido largo.",
+        en: "Child lock is active. Press and hold the red Stop / Cancel (■) button for 3 seconds until a long beep clears the lock."
+      }
+    },
+    {
+      q: { es: "No arranca tras elegir tiempo o menú", en: "Won't start after setting time or program" },
+      a: {
+        es: "Comprueba que la puerta esté completamente cerrada (sin restos en el pestillo) y pulsa el botón azul Inicio / +30s (▶) para iniciar.",
+        en: "Make sure the door latches shut cleanly (check for food debris around the catch) and press the blue Start / +30s (▶) button."
+      }
+    },
+    {
+      q: { es: "Chispas dentro de la cavidad o salta el breaker", en: "Sparks inside cavity or tripped breaker" },
+      a: {
+        es: "Detén de inmediato con (■). Nunca uses papel aluminio, metal ni vajilla con bordes dorados/plateados en modo microondas (la rejilla metálica se usa solo en Grill). Evita usarlo al mismo tiempo que otros equipos de alto consumo si el breaker salta.",
+        en: "Stop immediately with (■). Never use foil, metal, or metallic-rim dishes in microwave mode (wire rack is for Grill only). Avoid running high-wattage appliances simultaneously if the breaker trips."
+      }
+    },
+    {
+      q: { es: "Código E-01 o teclado congelado", en: "E-01 code or frozen display" },
+      a: {
+        es: "Puede deberse a un botón presionado demasiado tiempo o fallo temporal del sensor. Revisa que la puerta cierre bien y desconecta/baja el breaker 1–2 minutos; si persiste, avísanos.",
+        en: "May happen if a button sticks or a sensor triggers. Ensure the door closes properly and cycle power off for 1–2 minutes; contact us if it continues."
+      }
+    }
+  ],
+  blender: [
+    {
+      q: { es: "Se detuvo en medio del licuado o no enciende", en: "Stopped mid-blend or won't turn on" },
+      a: {
+        es: "Se activó la protección térmica por sobrecarga (mezcla muy espesa, exceso de hielo o uso continuo prolongado). Pulsa OFF, desenchufa de 15 a 30 minutos para enfriar el motor y añade más líquido.",
+        en: "Thermal overload shutoff likely tripped from thick mixtures or extended running. Press OFF, unplug for 15–30 minutes to cool the motor, and add more liquid."
+      }
+    },
+    {
+      q: { es: "El motor zumba pero las cuchillas no giran", en: "Motor hums but blades are jammed" },
+      a: {
+        es: "Las cuchillas están trabadas con hielo o trozos grandes. Desenchufa primero, retira el vaso, mueve los ingredientes con una espátula y usa toques cortos con Pulso (P1/P2) y más líquido.",
+        en: "Blades are jammed by ice or large chunks. Unplug first, remove the jar, free the blades with a spatula, add liquid, and start with short Pulse (P1/P2) bursts."
+      }
+    },
+    {
+      q: { es: "Vibra demasiado o gotea por la base del vaso", en: "Excessive vibration or leaking from jar base" },
+      a: {
+        es: "Apaga con OFF, verifica que la cuchilla y el empaque estén bien roscados al vaso de 1.75 L y que el vaso asiente parejo sobre la base del motor.",
+        en: "Press OFF, verify the blade collar and gasket are tightened squarely onto the 1.75 L glass jar, and seat the jar flat onto the motor base."
+      }
+    }
+  ],
+  coffee: [
+    {
+      q: { es: "El café se desborda en el canasto del filtro", en: "Filter basket overflows during brewing" },
+      a: {
+        es: "No sobrepases la marca de 12 tazas en la ventana de agua, verifica que el filtro cónico esté bien sentado sin doblarse y empuja la jarra de vidrio hasta el fondo para abrir la válvula antigoteo.",
+        en: "Never exceed the 12-cup max water line, ensure the cone filter sits flat, and push the glass carafe all the way back so the pause-and-serve drip valve engages properly."
+      }
+    },
+    {
+      q: { es: "No enciende o se apagó sola", en: "Won't turn on or shut off automatically" },
+      a: {
+        es: "La cafetera cuenta con apagado automático de seguridad tras finalizar el ciclo. Comprueba que esté enchufada (120 V) y pulsa ON/OFF; si la pantalla LCD se congela, desenchufa 60 segundos para reiniciar.",
+        en: "Includes automatic safety shutoff after brewing. Verify the 120 V outlet and press ON/OFF; if the LCD freezes, unplug for 60 seconds to reset."
+      }
+    },
+    {
+      q: { es: "Café muy aguado o goteo demasiado lento", en: "Weak coffee or very slow brewing" },
+      a: {
+        es: "Usa ~1 cucharada colmada de café molido medio por cada taza. Si sale muy lento o chisporrotea por minerales del agua, avísanos para realizarle descalcificación.",
+        en: "Use about 1 rounded tablespoon of medium-grind coffee per cup. If flow becomes very slow due to mineral scale buildup, let us know so we can descale it."
+      }
+    }
+  ],
+  tv: [
+    {
+      q: { es: "No responde al control remoto", en: "Remote control is not responding" },
+      a: {
+        es: "Según el manual LG: comprueba que nada tape el sensor inferior debajo del logo central LG, retira obstáculos entre el control y el TV, o reemplaza las pilas del control. Mientras tanto puedes encenderlo con el botón físico inferior.",
+        en: "Per LG manual: check nothing blocks the IR receiver under the center LG logo, clear obstacles in front of the TV, or replace the remote batteries. You can also use the bottom physical button."
+      }
+    },
+    {
+      q: { es: "El televisor se apaga solo de repente", en: "TV turns off unexpectedly" },
+      a: {
+        es: "El manual LG indica que el equipo incluye apagado automático a los 15 minutos cuando no hay señal de entrada ni uso del control remoto, además de temporizadores configurados en Energía.",
+        en: "Per LG manual, auto shut-off turns the TV off after 15 minutes with no signal or remote activity, or if a sleep/power timer is enabled."
+      }
+    },
+    {
+      q: { es: "Pantalla negra, parpadeo o 'Sin señal' en HDMI", en: "No picture or 'No Signal' via HDMI" },
+      a: {
+        es: "Verifica la toma eléctrica, revisa que el cable HDMI (de bisel delgado <10 mm y certificado) esté firme en el puerto y elige la entrada correcta (HDMI 1/2/3) con Input (🔌). Un ligero parpadeo al encender en frío es normal en el panel.",
+        en: "Check wall power, ensure a certified slim HDMI cable (<10 mm plug) is seated firmly, and switch to HDMI 1/2/3 via Input (🔌). Slight flicker when cold-booting is normal per LG."
+      }
+    }
+  ],
+  fridge: [
+    {
+      q: { es: "Suena una alarma o pitidos continuos", en: "Door or temperature alarm beeping" },
+      a: {
+        es: "Es la alarma de puerta abierta (> ~80 s) o temperatura elevada tras un corte eléctrico o carga abundante. Empuja los 3 cajones del congelador hasta el fondo, revisa que ninguna botella impida el cierre y limpia las juntas magnéticas.",
+        en: "Open-door alert (> ~80 s) or high-temp warning after power outage/heavy loading. Push all 3 freezer drawers fully in, ensure no tall bottles block the door, and wipe magnetic seals clean."
+      }
+    },
+    {
+      q: { es: "Enfría poco o disparejo en estantes", en: "Weak or uneven cooling inside fridge" },
+      a: {
+        es: "No bloquees la placa trasera AutoSense ni los ductos No Frost con alimentos pegados al fondo, deja espacio para circular el aire frío y no introduzcas ollas calientes.",
+        en: "Leave air space in front of the rear AutoSense plate and No Frost vents—do not push food flush against the back wall or place hot pots inside."
+      }
+    },
+    {
+      q: { es: "No sale agua del dispensador", en: "Water dispenser isn't dispensing" },
+      a: {
+        es: "Abre la puerta superior y verifica que el depósito interno desmontable esté encajado firmemente en su soporte y tenga suficiente agua potable.",
+        en: "Open the upper door to check that the removable interior tank is seated firmly in its dock and filled with clean drinking water."
+      }
+    }
+  ],
+  juicer: [
+    {
+      q: { es: "No enciende al mover el selector a '1' o '2'", en: "Unit does not run when switched to '1' or '2'" },
+      a: {
+        es: "Según el manual Oster: el brazo de seguridad metálico no está bien enganchado o la tapa/filtro no encajan completamente. Desenchufa, ensambla canasta, filtro, tapa y traba el brazo en sus ranuras.",
+        en: "Per Oster manual: the metal safety locking arm may not be latched firmly, or parts are misaligned. Unplug, reseat basket, stainless filter, and lid, then lock the arm securely."
+      }
+    },
+    {
+      q: { es: "Vibración fuerte, mucho ruido o motor estancado", en: "Loud vibration or motor stalls during juicing" },
+      a: {
+        es: "Exceso de pulpa atascando el filtro de acero inoxidable o contenedor de pulpa lleno. Apaga (0), desenchufa, vacía el depósito de pulpa y limpia bien la canasta y el filtro.",
+        en: "Excess pulp jamming the stainless filter or full pulp collector. Turn to 0, unplug, empty the pulp collector, and thoroughly clean the filter basket."
+      }
+    },
+    {
+      q: { es: "Pulpa muy húmeda o goteo entre borde y tapa", en: "Very wet pulp or juice dripping from lid rim" },
+      a: {
+        es: "Según el manual Oster: introduce frutas/vegetales más despacio por el tubo de alimentación (tras esperar 10 s encendido al inicio) y limpia la malla con cepillo de nylon bajo agua caliente si las fibras la obstruyen.",
+        en: "Per Oster manual: feed produce more slowly after waiting 10 s at startup, and scrub the stainless mesh under hot water with a nylon brush if fibers clog the screen."
+      }
+    }
+  ]
+};
+
+function buildTroubleshootingHtml(app) {
+  const items = TROUBLESHOOTING[app.id];
+  if (!items || !items.length) return "";
+  const lis = items.map(it => `
+    <li class="trouble-item">
+      <span class="trouble-q">${t(it.q)}</span>
+      <span class="trouble-a">${t(it.a)}</span>
+    </li>`).join("");
+  return `
+    <details class="trouble-box">
+      <summary>
+        ${currentLang === "es" ? "⚠️ Errores comunes y soluciones (según manual)" : "⚠️ Common issues & troubleshooting (per manual)"}
+      </summary>
+      <ul class="trouble-list">${lis}</ul>
+    </details>`;
+}
+
 function buildMediaHtml(app) {
   if (!app.specPdf) return "";
   return `
@@ -2593,6 +2822,7 @@ function renderVerifiedStack() {
               </summary>
               <ol class="steps-list">${app.steps[currentLang].map(s => `<li>${s}</li>`).join("")}</ol>
             </details>
+            ${buildTroubleshootingHtml(app)}
             ${buildMediaHtml(app) ? `<div class="media-row">${buildMediaHtml(app)}</div>` : ""}
           </div>
         </div>
@@ -2776,6 +3006,7 @@ function renderModalBody() {
     </div>`;
 
   document.getElementById("modalStepsList").innerHTML = app.steps[currentLang].map(s => `<li>${s}</li>`).join("");
+  document.getElementById("modalTroubleshooting").innerHTML = buildTroubleshootingHtml(app);
   const modalMedia = buildMediaHtml(app);
   const modalMediaEl = document.getElementById("modalMediaRow");
   modalMediaEl.innerHTML = modalMedia;

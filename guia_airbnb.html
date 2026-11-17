@@ -240,6 +240,8 @@ html[lang="en"] .lang-en{display:inline !important}
   justify-content:space-between;
   align-items:center;
   gap:8px;
+  row-gap:4px;
+  flex-wrap:wrap;
   margin-top:10px;
   color:#c5cfc7;
   font-size:.76rem;
@@ -395,6 +397,9 @@ html[lang="en"] .lang-en{display:inline !important}
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:8px;
+  row-gap:4px;
+  flex-wrap:wrap;
   font-size:.71rem;
   text-transform:uppercase;
   letter-spacing:.08em;
@@ -743,7 +748,7 @@ html[lang="en"] .lang-en{display:inline !important}
 }
 .card-status.verified{background:var(--accent);color:#fff}
 .cardbody{padding:16px;display:flex;flex-direction:column;flex:1}
-.cardtop{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.cardtop{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .card h3{font-size:1.05rem;margin:0;font-weight:700}
 .tag{
   font-size:.66rem;
@@ -861,9 +866,11 @@ html[lang="en"] .lang-en{display:inline !important}
 @media(max-width:600px){
   .hero{padding-top:24px}
   .grid{grid-template-columns:1fr}
-  .featured,.modal{padding:16px}
+  .featured,.modal,.access-card{padding:16px}
   .automenu-grid{grid-template-columns:1fr}
   .touchbar-row{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .view-switch{border-radius:16px;width:100%}
+  .view-switch button{flex:1 1 auto;text-align:center}
 }
 @media print{
   .lang,.filters,.view-switch,.btn-primary,.modal-backdrop{display:none !important}
@@ -2059,7 +2066,8 @@ const APPLIANCES = [
 ];
 
 const CHECKIN_ACCESS = {
-  videoUrl: "assets/videos/ingreso-departamento.mp4"
+  videoUrl: "assets/videos/ingreso-departamento.mp4",
+  posterUrl: "assets/videos/ingreso-poster.jpg"
 };
 
 function renderAccessVideo() {
@@ -2067,11 +2075,12 @@ function renderAccessVideo() {
   if (!slot) return;
   const hasVideo = Boolean(CHECKIN_ACCESS.videoUrl && CHECKIN_ACCESS.videoUrl.trim());
   if (hasVideo) {
+    const posterAttr = CHECKIN_ACCESS.posterUrl ? `poster="${CHECKIN_ACCESS.posterUrl}"` : "";
     slot.innerHTML = `
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
         <strong style="font-size:.9rem">▶ ${currentLang === "es" ? "Vídeo de ingreso con código de acceso" : "Access code entry walkthrough video"}</strong>
       </div>
-      <video class="video-player" controls playsinline preload="metadata" src="${CHECKIN_ACCESS.videoUrl}"></video>`;
+      <video class="video-player" controls playsinline preload="metadata" ${posterAttr} src="${CHECKIN_ACCESS.videoUrl}"></video>`;
     return;
   }
   slot.innerHTML = `
@@ -2472,9 +2481,18 @@ function renderVerifiedStack() {
   stack.querySelectorAll("[data-vview]").forEach(btn => {
     btn.addEventListener("click", () => {
       const appId = btn.getAttribute("data-vapp");
-      verifiedState[appId].view = btn.getAttribute("data-vview");
-      if (verifiedState[appId].view === "parts" && verifiedState[appId].partsIdx == null) {
+      const newView = btn.getAttribute("data-vview");
+      const app = APPLIANCES.find(a => a.id === appId);
+      verifiedState[appId].view = newView;
+      if (newView === "parts" && verifiedState[appId].partsIdx == null) {
         verifiedState[appId].partsIdx = 0;
+      }
+      if (app && app.controls.some(c => c.rects)) {
+        const curCtrl = app.controls.find(c => c.id === verifiedState[appId].controlId);
+        if (!curCtrl || !curCtrl.rects || !curCtrl.rects[newView]) {
+          const matchCtrl = app.controls.find(c => c.rects && c.rects[newView]);
+          if (matchCtrl) verifiedState[appId].controlId = matchCtrl.id;
+        }
       }
       renderVerifiedStack();
     });
